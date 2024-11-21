@@ -13,8 +13,7 @@ export default function LoginForm() {
     });
     const onSubmit = (data: LoginSchema) => console.log(data);
   return (
-    <div className='flex items-center justify-center min-h-screen'>
-      <Card className='w-2/5'>
+      <Card className='w-2/5 mx-auto'>
         <CardHeader className="flex flex-col items-center justify-center">
             <div className='flex flex-col items-center justify-center'>
                 <div className='flex flex-row items-center gap-3'>
@@ -64,6 +63,5 @@ export default function LoginForm() {
             </form>
         </CardBody>
       </Card>
-    </div>
   )
 }
