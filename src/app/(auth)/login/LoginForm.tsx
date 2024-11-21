@@ -4,10 +4,14 @@ import { Button, Card, CardBody, CardHeader, Input } from '@nextui-org/react';
 import React from 'react'
 import { GiPadlock } from "react-icons/gi";
 import { useForm, SubmitHandler } from "react-hook-form"
+import { loginSchema, LoginSchema } from '@/lib/schemas/LoginSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function LoginForm() {
-    const { register, handleSubmit } = useForm();
-    const onSubmit = (data: any) => console.log(data);
+    const { register, handleSubmit, formState: { isValid, errors } } = useForm<LoginSchema>({
+        resolver: zodResolver(loginSchema),
+    });
+    const onSubmit = (data: LoginSchema) => console.log(data);
   return (
     <div className='flex items-center justify-center min-h-screen'>
       <Card className='w-2/5'>
@@ -28,22 +32,31 @@ export default function LoginForm() {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='space-y-4'>
                     <Input 
-                        defaultValue=""
+                        placeholder=""
                         label="Email"
                         variant="bordered"
-                        {...register("Email")}
+                        {...register("email")}
+                        isInvalid={!!errors.email}
+                        errorMessage={
+                            errors.email?.message as string
+                        }
                         />
                     <Input 
-                        defaultValue=''
+                        placeholder=''
                         label="Password"
                         variant="bordered"
                         type='password'
-                        {...register("Password")}
+                        {...register("password")}
+                        isInvalid={!!errors.password}
+                        errorMessage={
+                            errors.password?.message as string
+                        }
                     />
                     <Button
                         fullWidth
                         color='default'
                         type='submit'
+                        isDisabled={!isValid}
                     >
                         Login
                     </Button>
